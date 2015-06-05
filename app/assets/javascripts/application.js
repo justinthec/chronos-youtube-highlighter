@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap
-//= require ripples
-//= require material
+//= require bootstrap.min
+//= require ripples.min
+//= require material.min
 //= require highlights

@@ -11,10 +11,10 @@
  * file per style scope.
  *
  *= require_self
- *= require bootstrap
- *= require roboto
+ *= require bootstrap.min
+ *= require roboto.min
  *= require material-custom
- *= require ripples
+ *= require ripples.min
  *= require youtube-icon
  *= require highlights
  */

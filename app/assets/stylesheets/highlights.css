@@ -1,0 +1,40 @@
+body {
+  background-color: #673AB7;
+  margin-top: 50px;
+}
+
+h1 span.logo {
+  /*font-family: 'Cinzel Decorative', cursive;*/
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 70px;
+}
+
+h1 span.logo a {
+  color: #FFFFFF;
+  text-decoration: none; 
+}
+
+h4 span.sub-heading {
+  color: #D1C4E9;
+}
+
+.accent-color {
+  color: #FF5252;
+}
+
+.accent-fallback-color {
+  color: #FF8A80;
+}
+
+#player-container {
+  transition-property: opacity, padding-bottom;
+  transition-duration: 1.5s;
+  transition-timing-function: ease-in;
+  opacity: 0;
+  padding-bottom: 0px;
+}
+
+#player-container.expanded {
+  opacity: 1;
+  padding-bottom: 56.25%;
+}

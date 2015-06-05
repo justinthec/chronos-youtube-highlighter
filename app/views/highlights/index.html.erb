@@ -1,0 +1,18 @@
+<div class="text-center">
+  <h1><span class="logo"><a href="#">Chronos</a></span></h1>
+  <br/>
+  <h4><span class="sub-heading">Transform YouTube <span id='youtube'></span> videos into <span class="accent-fallback-color"><b>highlight reels</b></span>  using a sequence of timestamps.</span></h4>
+  <br/>
+  <div class="well well-lg">
+    <div class="form-group">
+      <input class="form-control floating-label input-lg" id="urlField" onclick="this.setSelectionRange(0, this.value.length)" type="text" placeholder="Paste a YouTube URL">
+
+      <a href="javascript:void(0)" id="fetchButton" onclick="onFetchUrlClick();" class="btn btn-primary btn-lg disabled">Fetch Video</a>
+    </div>
+
+    <!-- 16:9 aspect ratio -->
+    <div id="player-container" class="embed-responsive embed-responsive-16by9">
+      <div id="player"></div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player;
+var chronos;
 function onYouTubeIframeAPIReady() {
   apiReady = true; // API is ready
   var fetchButton = document.getElementById('fetchButton');
@@ -28,18 +29,26 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   playerElement = document.getElementById('player');
   playerElement.classList.add('embed-responsive-item');
-
-  event.target.playVideo();
 }
 
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
-var done = false;
 function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 10000);
-    done = true;
+  if (event.data == YT.PlayerState.PLAYING) {
+    var highlightChildren = [].slice.call(document.getElementById('highlight1').children);
+    var inputs = highlightChildren.filter(function(child){return child.tagName == 'INPUT';});
+    var starth = inputs[0].value;
+    var startm = inputs[1].value;
+    var starts = inputs[2].value;
+    var endh = inputs[3].value;
+    var endm = inputs[4].value;
+    var ends = inputs[5].value;
+
+    chronos && chronos.destroy();
+    chronos = new Chronos(player);
+    chronos.addHighlight(starth, startm, starts, endh, endm, ends);
+    chronos.startWatcher();
   }
 }
 

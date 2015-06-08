@@ -16,4 +16,5 @@
 //= require bootstrap.min
 //= require ripples.min
 //= require material.min
+//= require chronos
 //= require highlights

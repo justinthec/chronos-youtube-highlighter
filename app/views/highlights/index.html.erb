@@ -6,6 +6,29 @@
   <div class="well well-lg">
     <div class="form-group">
       <input class="form-control floating-label input-lg" id="urlField" onclick="this.setSelectionRange(0, this.value.length)" type="text" placeholder="Paste a YouTube URL">
+      <br />
+
+      <h5>Highlights</h5>
+      <form class="form-inline">
+        <div id="highlights-container">
+          <div class="form-group highlight">
+            <input class="form-control time-input" type="text" placeholder="Start">
+            <span class="time-to-line">—</span>
+            <input class="form-control time-input" type="text" placeholder="End">
+          </div>
+          <div class="form-group highlight">
+            <input class="form-control time-input" type="text" placeholder="Start">
+            <span class="time-to-line">—</span>
+            <input class="form-control time-input" type="text" placeholder="End">
+          </div>
+          <div class="form-group highlight">
+            <input class="form-control time-input" type="text" placeholder="Start">
+            <span class="time-to-line">—</span>
+            <input class="form-control time-input" type="text" placeholder="End">
+          </div>
+        </div>
+      </form>
+      <br/>
 
       <a href="javascript:void(0)" id="fetchButton" onclick="onFetchUrlClick();" class="btn btn-primary btn-lg disabled">Fetch Video <i class="mdi-image-movie-creation"></i></a>
     </div>
@@ -13,25 +36,6 @@
     <!-- 16:9 aspect ratio -->
     <div id="player-container" class="embed-responsive embed-responsive-16by9">
       <div id="player"></div>
-    </div>
-    <br/>
-    <h5>Highlights</h5>
-    <div id="highlighter-container">
-      <form class="form-inline">
-        <div id="highlight1" class="form-group">
-          <input class="form-control time-input" type="text" placeholder="HH">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="MM">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="SS">
-          <span class="time-to-line">—</span>
-          <input class="form-control time-input" type="text" placeholder="HH">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="MM">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="SS">
-        </div>
-      </form>
     </div>
   </div>
 </div>

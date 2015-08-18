@@ -5,8 +5,8 @@ function Chronos(player) {
   this.highlights = [];
 }
 // class methods
-Chronos.prototype.addHighlight = function(starth, startm, starts, endh, endm, ends) {
-  var highlight = new Highlight(starth, startm, starts, endh, endm, ends);
+Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
+  var highlight = new Highlight(startSeconds, endSeconds);
   this.highlights.push(highlight);
   this.highlights.sort(); 
 };
@@ -43,9 +43,9 @@ Chronos.prototype.destroy = function() {
   window.clearInterval(this.watcher);
 };
 
-function Highlight(starth, startm, starts, endh, endm, ends) {
-  this.start = parseInt(starth) * 60 * 60 + parseInt(startm) * 60 + parseInt(starts);
-  this.end = parseInt(endh) * 60 * 60 + parseInt(endm) * 60 + parseInt(ends);
+function Highlight(start, end) {
+  this.start = start;
+  this.end = end;
 }
 // export the class
 // module.exports = Chronos;

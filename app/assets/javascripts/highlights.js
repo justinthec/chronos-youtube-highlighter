@@ -36,18 +36,30 @@ function onPlayerReady(event) {
 //    the player should play for six seconds and then stop.
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
-    var highlightChildren = [].slice.call(document.getElementById('highlight1').children);
-    var inputs = highlightChildren.filter(function(child){return child.tagName == 'INPUT';});
-    var starth = inputs[0].value;
-    var startm = inputs[1].value;
-    var starts = inputs[2].value;
-    var endh = inputs[3].value;
-    var endm = inputs[4].value;
-    var ends = inputs[5].value;
-
     chronos && chronos.destroy();
     chronos = new Chronos(player);
-    chronos.addHighlight(starth, startm, starts, endh, endm, ends);
+
+    var highlights = document.getElementById('highlights-container').children;
+    for (var i = 0; i < highlights.length; i++) {
+      var inputs = [];
+      for (var j in highlights[i].children) {
+        if (highlights[i].children[j].tagName == "INPUT")
+          inputs.push(highlights[i].children[j]);
+      }
+      var startString = inputs[0].value;
+      var endString = inputs[1].value;
+
+      highlightBounds= [startString, endString].map(function(timeString) {
+        var timeFactors = timeString.split(":").reverse();
+        var timeInSeconds = 0;
+        for (var i = 0; i < timeFactors.length; i++) {
+          timeInSeconds += timeFactors[i] * Math.pow(60, i);
+        }
+      });
+
+      chronos.addHighlight(highlightBounds[0], highlightBounds[1]);
+    }
+
     chronos.startWatcher();
   }
 }

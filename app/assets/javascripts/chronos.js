@@ -8,7 +8,9 @@ function Chronos(player) {
 Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
   var highlight = new Highlight(startSeconds, endSeconds);
   this.highlights.push(highlight);
-  this.highlights.sort(); 
+  this.highlights.sort(function(a, b) {
+    return a.start - b.start;
+  });
 };
 
 Chronos.prototype.startWatcher = function() {
@@ -25,7 +27,10 @@ Chronos.prototype.withinHighlight = function(time) {
 
 Chronos.prototype.handleFrame = function(instance) {
   var currentTime = instance.player.getCurrentTime();
-  console.log("CurrentTime: "+currentTime+", highlights:"+instance.highlights.length+", withinHighlight: "+instance.withinHighlight(currentTime) + ", findNextHighlight: "+instance.findNextHighlight(currentTime));
+  console.log("CurrentTime: " + currentTime +
+    ", highlights:" + instance.highlights.length +
+    ", withinHighlight: " + instance.withinHighlight(currentTime) +
+    ", findNextHighlight: " + instance.findNextHighlight(currentTime));
   if ((instance.player.getPlayerState() == 1) && !(instance.withinHighlight(currentTime))) {
     instance.player.seekTo(instance.findNextHighlight(currentTime), true);
   }
@@ -43,9 +48,8 @@ Chronos.prototype.destroy = function() {
   window.clearInterval(this.watcher);
 };
 
+// Constructor
 function Highlight(start, end) {
   this.start = start;
   this.end = end;
 }
-// export the class
-// module.exports = Chronos;

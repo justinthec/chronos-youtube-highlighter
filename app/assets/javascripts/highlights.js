@@ -49,12 +49,13 @@ function onPlayerStateChange(event) {
       var startString = inputs[0].value;
       var endString = inputs[1].value;
 
-      highlightBounds= [startString, endString].map(function(timeString) {
+      highlightBounds = [startString, endString].map(function(timeString) {
         var timeFactors = timeString.split(":").reverse();
         var timeInSeconds = 0;
         for (var i = 0; i < timeFactors.length; i++) {
           timeInSeconds += timeFactors[i] * Math.pow(60, i);
         }
+        return timeInSeconds;
       });
 
       chronos.addHighlight(highlightBounds[0], highlightBounds[1]);

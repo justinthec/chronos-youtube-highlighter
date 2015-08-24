@@ -1,10 +1,11 @@
 // Constructor
-function Chronos(player) {
-  // always initialize all instance properties
+function Chronos(player, frameInterval) {
   this.player = player;
+  this.frameInterval = typeof frameInterval !== 'undefined' ? frameInterval : 1000; // Defaults to 1 second if none passed in.
   this.highlights = [];
 }
-// class methods
+
+// Class methods
 Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
   var highlight = new Highlight(startSeconds, endSeconds);
   this.highlights.push(highlight);
@@ -14,7 +15,7 @@ Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
 };
 
 Chronos.prototype.startWatcher = function() {
-  this.watcher = window.setInterval(this.handleFrame, 1000, this);
+  this.watcher = window.setInterval(this.handleFrame, frameInterval, this);
 }
 
 Chronos.prototype.withinHighlight = function(time) {

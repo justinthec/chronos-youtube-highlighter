@@ -24,8 +24,8 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   $('#fetch-container').popover('destroy');
   $('#player').addClass('embed-responsive-item');
-  $('#highlights-container .highlight .time-input:eq(0)').val("0:00");
-  $('#highlights-container .highlight .time-input:eq(1)').val(player.getDuration());
+  $('#highlights-container .highlight .time-input:eq(1)').val(player.getDuration()).focus();
+  $('#highlights-container .highlight .time-input:eq(0)').val("0:00").focus();
   $('#highlights-container, #player-container').popover('show');
 }
 
@@ -133,7 +133,17 @@ $(document).ready(function() {
     this.setSelectionRange(0, this.value.length)
   });
 
+  function formatTimestamp() {
+    var newVal = $(this).val();
+    if(newVal.indexOf(':') == -1)
+      newVal = Math.floor(newVal / 60) + ":" + ((newVal % 60).toString().length < 2 ? "0" : "") + (newVal % 60);
+    $(this).val(newVal);
+  }
+
   $('#add-highlight-button').click(function() {
     $('#highlight-inputs-container').append("<div class=\"form-group highlight\"><input class=\"form-control time-input\" type=\"text\" placeholder=\"Start\"><span class=\"time-to-line\">—</span><input class=\"form-control time-input\" type=\"text\" placeholder=\"End\"></div>");
+    $('#highlights-container .highlight .time-input').focusout(formatTimestamp);
   });
+
+  $('#highlights-container .highlight .time-input').focusout(formatTimestamp);
 });

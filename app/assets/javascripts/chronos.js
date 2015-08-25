@@ -1,7 +1,7 @@
 // Constructor
 function Chronos(player, frameInterval) {
   this.player = player;
-  this.frameInterval = typeof frameInterval !== 'undefined' ? frameInterval : 1000; // Defaults to 1 second if none passed in.
+  this.frameInterval = typeof frameInterval !== 'undefined' ? frameInterval : 100; // Defaults to tenth of a second if none passed in.
   this.highlights = [];
 }
 
@@ -15,7 +15,7 @@ Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
 };
 
 Chronos.prototype.startWatcher = function() {
-  this.watcher = window.setInterval(this.handleFrame, frameInterval, this);
+  this.watcher = window.setInterval(this.handleFrame, this.frameInterval, this);
 }
 
 Chronos.prototype.withinHighlight = function(time) {

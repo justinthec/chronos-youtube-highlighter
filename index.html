@@ -8,12 +8,12 @@
     <title>Chronos YouTube Highlighter</title>
     <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:900' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat+Subrayada:700' rel='stylesheet' type='text/css'>
-    <link href='index/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='app/assets/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css'>
     <link href='index/css/roboto.min.css' rel='stylesheet' type='text/css'>
     <link href='index/css/material-custom.css' rel='stylesheet' type='text/css'>
-    <link href='index/css/ripples.min.css' rel='stylesheet' type='text/css'>
-    <link href='index/css/youtube-icon.css' rel='stylesheet' type='text/css'>
-    <link href='index/css/highlights.css' rel='stylesheet' type='text/css'>
+    <link href='app/assets/stylesheets/ripples.min.css' rel='stylesheet' type='text/css'>
+    <link href='app/assets/stylesheets/youtube-icon.css' rel='stylesheet' type='text/css'>
+    <link href='app/assets/stylesheets/highlights.css' rel='stylesheet' type='text/css'>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -25,38 +25,39 @@
     <div class="container-fluid">
       <div class="text-center">
         <h1><span class="logo"><a href="#">Chronos</a></span></h1>
-        <br/>
         <h4><span class="sub-heading">Transform YouTube <span id='youtube'></span> videos into <span class="accent-fallback-color"><b>highlight reels</b></span>  using a sequence of timestamps.</span></h4>
         <br/>
         <div class="well well-lg">
           <div class="form-group">
-            <input class="form-control floating-label input-lg" id="urlField" onclick="this.setSelectionRange(0, this.value.length)" type="text" placeholder="Paste a YouTube URL">
+            <div id="fetch-container" data-toggle="popover" data-placement="top" data-content="Give a YouTube link" data-animation="true" data-trigger="focus" class="input-group">
+              <input class="form-control floating-label input-lg" id="url-field" type="text" placeholder="Paste a YouTube URL">
+              <span class="input-group-btn">
+                <a href="javascript:void(0)" id="fetch-button" class="btn btn-primary btn-md disabled">Fetch Video</a>
+              </span>
+            </div>
+            <br />
 
-            <a href="javascript:void(0)" id="fetchButton" onclick="onFetchUrlClick();" class="btn btn-primary btn-lg disabled">Fetch Video <i class="mdi-image-movie-creation"></i></a>
+            <div id="highlights-container" data-toggle="popover" data-placement="left" data-content="Choose your highlight times..." data-animation="true" data-trigger="focus">
+              <h5>Highlights <i class="mdi-image-movie-creation"></i></h5>
+              <form class="form-inline">
+                <div id="highlight-inputs-container">
+                  <div class="form-group highlight">
+                    <input class="form-control time-input" type="text" placeholder="Start">
+                    <span class="time-to-line">—</span>
+                    <input class="form-control time-input" type="text" placeholder="End">
+                  </div>
+                </div>
+                <div class="add-highlight-button-container">
+                  <a href="javascript:void(0)" id="add-highlight-button" class="btn btn-success btn-sm">New Highlight <i class="mdi-content-add"></i></a>
+                </div>
+              </form>
+            </div>
+            <br/>
           </div>
 
           <!-- 16:9 aspect ratio -->
-          <div id="player-container" class="embed-responsive embed-responsive-16by9">
+          <div id="player-container" data-toggle="popover" data-placement="right" data-content="...and press Play!" data-animation="true" data-trigger="focus" class="embed-responsive embed-responsive-16by9">
             <div id="player"></div>
-          </div>
-          <br/>
-          <h5>Highlights</h5>
-          <div id="highlighter-container">
-            <form class="form-inline">
-              <div id="highlight1" class="form-group">
-                <input class="form-control time-input" type="text" placeholder="HH">
-                <span class="timestamp-semicolon">:</span>
-                <input class="form-control time-input" type="text" placeholder="MM">
-                <span class="timestamp-semicolon">:</span>
-                <input class="form-control time-input" type="text" placeholder="SS">
-                <span class="time-to-line">—</span>
-                <input class="form-control time-input" type="text" placeholder="HH">
-                <span class="timestamp-semicolon">:</span>
-                <input class="form-control time-input" type="text" placeholder="MM">
-                <span class="timestamp-semicolon">:</span>
-                <input class="form-control time-input" type="text" placeholder="SS">
-              </div>
-            </form>
           </div>
         </div>
       </div>
@@ -65,11 +66,11 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="index/js/bootstrap.min.js"></script>
-    <script src="index/js/ripples.min.js"></script>
-    <script src="index/js/material.min.js"></script>
-    <script src="index/js/chronos.js"></script>
-    <script src="index/js/highlights.js"></script>
+    <script src="app/assets/javascripts/bootstrap.min.js"></script>
+    <script src="app/assets/javascripts/ripples.min.js"></script>
+    <script src="app/assets/javascripts/material.min.js"></script>
+    <script src="app/assets/javascripts/chronos.js"></script>
+    <script src="app/assets/javascripts/highlights.js"></script>
     <script>
       $(document).ready(function() {
           // This command is used to initialize some elements and make them work properly

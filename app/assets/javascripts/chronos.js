@@ -1,18 +1,21 @@
 // Constructor
-function Chronos(player) {
-  // always initialize all instance properties
+function Chronos(player, frameInterval) {
   this.player = player;
+  this.frameInterval = typeof frameInterval !== 'undefined' ? frameInterval : 100; // Defaults to tenth of a second if none passed in.
   this.highlights = [];
 }
-// class methods
-Chronos.prototype.addHighlight = function(starth, startm, starts, endh, endm, ends) {
-  var highlight = new Highlight(starth, startm, starts, endh, endm, ends);
+
+// Class methods
+Chronos.prototype.addHighlight = function(startSeconds, endSeconds) {
+  var highlight = new Highlight(startSeconds, endSeconds);
   this.highlights.push(highlight);
-  this.highlights.sort(); 
+  this.highlights.sort(function(a, b) {
+    return a.start - b.start;
+  });
 };
 
 Chronos.prototype.startWatcher = function() {
-  this.watcher = window.setInterval(this.handleFrame, 1000, this);
+  this.watcher = window.setInterval(this.handleFrame, this.frameInterval, this);
 }
 
 Chronos.prototype.withinHighlight = function(time) {
@@ -25,7 +28,10 @@ Chronos.prototype.withinHighlight = function(time) {
 
 Chronos.prototype.handleFrame = function(instance) {
   var currentTime = instance.player.getCurrentTime();
-  console.log("CurrentTime: "+currentTime+", highlights:"+instance.highlights.length+", withinHighlight: "+instance.withinHighlight(currentTime) + ", findNextHighlight: "+instance.findNextHighlight(currentTime));
+  console.log("CurrentTime: " + currentTime +
+    ", highlights:" + instance.highlights.length +
+    ", withinHighlight: " + instance.withinHighlight(currentTime) +
+    ", findNextHighlight: " + instance.findNextHighlight(currentTime));
   if ((instance.player.getPlayerState() == 1) && !(instance.withinHighlight(currentTime))) {
     instance.player.seekTo(instance.findNextHighlight(currentTime), true);
   }
@@ -43,9 +49,8 @@ Chronos.prototype.destroy = function() {
   window.clearInterval(this.watcher);
 };
 
-function Highlight(starth, startm, starts, endh, endm, ends) {
-  this.start = parseInt(starth) * 60 * 60 + parseInt(startm) * 60 + parseInt(starts);
-  this.end = parseInt(endh) * 60 * 60 + parseInt(endm) * 60 + parseInt(ends);
+// Constructor
+function Highlight(start, end) {
+  this.start = start;
+  this.end = end;
 }
-// export the class
-// module.exports = Chronos;

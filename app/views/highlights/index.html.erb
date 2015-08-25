@@ -1,37 +1,38 @@
 <div class="text-center">
   <h1><span class="logo"><a href="#">Chronos</a></span></h1>
-  <br/>
   <h4><span class="sub-heading">Transform YouTube <span id='youtube'></span> videos into <span class="accent-fallback-color"><b>highlight reels</b></span>  using a sequence of timestamps.</span></h4>
   <br/>
   <div class="well well-lg">
     <div class="form-group">
-      <input class="form-control floating-label input-lg" id="urlField" onclick="this.setSelectionRange(0, this.value.length)" type="text" placeholder="Paste a YouTube URL">
+      <div id="fetch-container" data-toggle="popover" data-placement="top" data-content="Give a YouTube link" data-animation="true" data-trigger="focus" class="input-group">
+        <input class="form-control floating-label input-lg" id="url-field" type="text" placeholder="Paste a YouTube URL">
+        <span class="input-group-btn">
+          <a href="javascript:void(0)" id="fetch-button" class="btn btn-primary btn-md disabled">Fetch Video</a>
+        </span>
+      </div>
+      <br />
 
-      <a href="javascript:void(0)" id="fetchButton" onclick="onFetchUrlClick();" class="btn btn-primary btn-lg disabled">Fetch Video <i class="mdi-image-movie-creation"></i></a>
+      <div id="highlights-container" data-toggle="popover" data-placement="left" data-content="Choose your highlight times..." data-animation="true" data-trigger="focus">
+        <h5>Highlights <i class="mdi-image-movie-creation"></i></h5>
+        <form class="form-inline">
+          <div id="highlight-inputs-container">
+            <div class="form-group highlight">
+              <input class="form-control time-input" type="text" placeholder="Start">
+              <span class="time-to-line">—</span>
+              <input class="form-control time-input" type="text" placeholder="End">
+            </div>
+          </div>
+          <div class="add-highlight-button-container">
+            <a href="javascript:void(0)" id="add-highlight-button" class="btn btn-success btn-sm">New Highlight <i class="mdi-content-add"></i></a>
+          </div>
+        </form>
+      </div>
+      <br/>
     </div>
 
     <!-- 16:9 aspect ratio -->
-    <div id="player-container" class="embed-responsive embed-responsive-16by9">
+    <div id="player-container" data-toggle="popover" data-placement="right" data-content="...and press Play!" data-animation="true" data-trigger="focus" class="embed-responsive embed-responsive-16by9">
       <div id="player"></div>
-    </div>
-    <br/>
-    <h5>Highlights</h5>
-    <div id="highlighter-container">
-      <form class="form-inline">
-        <div id="highlight1" class="form-group">
-          <input class="form-control time-input" type="text" placeholder="HH">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="MM">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="SS">
-          <span class="time-to-line">—</span>
-          <input class="form-control time-input" type="text" placeholder="HH">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="MM">
-          <span class="timestamp-semicolon">:</span>
-          <input class="form-control time-input" type="text" placeholder="SS">
-        </div>
-      </form>
     </div>
   </div>
 </div>

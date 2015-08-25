@@ -7,6 +7,7 @@ h1 span.logo {
   /*font-family: 'Cinzel Decorative', cursive;*/
   font-family: 'Montserrat Subrayada', sans-serif;
   font-size: 70px;
+  font-size: 10vw;
 }
 
 h1 span.logo a {
@@ -39,35 +40,125 @@ h4 span.sub-heading {
   padding-bottom: 56.25%;
 }
 
-a.btn.btn-primary.btn-lg i {
-  top: 3px;
+i {
   position: relative;
+  font-size: 1.5em !important;
+}
+
+a.btn-lg i {
+  top: 5px;
+}
+
+a.btn-sm i, h5 i {
+  top: 3px;
 }
 
 span.time-to-line {
   display: none;
 }
 
-@media (min-width: 786px) {
-  input.form-control.time-input {
-    width: 5%;
-    text-align: center;
+.popover {
+  display: none !important;
+  animation-duration: 3s;
+  animation-name: bobble;
+  animation-iteration-count: infinite;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-name: bobble;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-duration: 3s;
+  -moz-animation-name: bobble;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-duration: 3s;
+  -o-animation-name: bobble;
+  -o-animation-iteration-count: infinite;
+}
+
+@keyframes bobble {
+  0% {
+    margin-top:0;
   }
+  50% {
+    margin-top:-10px;
+  }
+  100% {
+    margin-top:0;
+  }
+}
+
+@-webkit-keyframes bobble {
+  0% {
+    margin-top:0;
+  }
+  50% {
+    margin-top:-10px;
+  }
+  100% {
+    margin-top:0;
+  }
+}
+
+@-moz-keyframes bobble {
+  0% {
+    margin-top:0;
+  }
+  50% {
+    margin-top:-10px;
+  }
+  100% {
+    margin-top:0;
+  }
+}
+
+@-o-keyframes bobble {
+  0% {
+    margin-top:0;
+  }
+  50% {
+    margin-top:-10px;
+  }
+  100% {
+    margin-top:0;
+  }
+}
+@media (min-width: 768px) {
   span.time-to-line {
     margin-left: 30px;
     margin-right: 30px;
     display: inline;
   }
-}
 
-span.timestamp-semicolon {
-  opacity: 0.75;
-}
+  .well.well-lg {
+    width: 80%;
+  }
 
-@media (min-width: 0px) {
-  .form-inline .form-control {
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
+  .popover {
+    display: block !important;
   }
 }
+
+input.time-input {
+  text-align: center;
+}
+
+#highlights-container {
+  display: inline-block;
+}
+
+#add-highlight-button-container {
+  display: block;
+}
+
+.form-inline .form-control {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+}
+
+.form-group .highlight {
+  display: block;
+}
+
+.well.well-lg {
+  margin: auto;
+}
+

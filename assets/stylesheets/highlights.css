@@ -142,6 +142,7 @@ input.time-input {
 
 #highlights-container {
   display: inline-block;
+  width: 50%;
 }
 
 #add-highlight-button-container {
@@ -150,12 +151,13 @@ input.time-input {
 
 .form-inline .form-control {
   display: inline-block;
-  width: auto;
+  width: 100%;
   vertical-align: middle;
 }
 
 .form-group .highlight {
   display: block;
+  width: 100%;
 }
 
 .well.well-lg {

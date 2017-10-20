@@ -37,20 +37,21 @@
             </div>
             <br />
 
-            <div id="highlights-container" data-toggle="popover" data-placement="left" data-content="Choose your highlight times..." data-animation="true" data-trigger="focus">
-              <h5>Highlights <i class="mdi-image-movie-creation"></i></h5>
+            <div id="highlights-container" data-toggle="popover" data-placement="left" data-content="Pass in the game info..." data-animation="true" data-trigger="focus">
+              <h5>Game Info</h5>
               <form class="form-inline">
                 <div id="highlight-inputs-container">
                   <div class="form-group highlight">
-                    <input class="form-control time-input" type="text" placeholder="Start">
-                    <span class="time-to-line">—</span>
-                    <input class="form-control time-input" type="text" placeholder="End">
+                    <input class="form-control" type="text" id="gamedataurl" placeholder="Game Data">
+                  </div>
+                  <div class="form-group highlight">
+                    <input class="form-control" id="gameoffset" type="text" placeholder="Game Offset">
                   </div>
                 </div>
-                <div class="add-highlight-button-container">
-                  <a href="javascript:void(0)" id="add-highlight-button" class="btn btn-success btn-sm">New Highlight <i class="mdi-content-add"></i></a>
+<!--                 <div class="add-highlight-button-container">
+                  <a href="javascript:void(0)" id="process-highlights-button" class="btn btn-success btn-sm">Prepare Highlights</a>
                 </div>
-              </form>
+ -->              </form>
             </div>
             <br/>
           </div>

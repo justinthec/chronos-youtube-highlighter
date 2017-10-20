@@ -1,6 +1,8 @@
 // Chronos variable
 var chronos;
 
+var globalHighlights = [];
+
 // YouTube Player API
 // 1. Prepare for API Load
 var apiReady = false;
@@ -24,8 +26,7 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   $('#fetch-container').popover('destroy');
   $('#player').addClass('embed-responsive-item');
-  $('#highlights-container .highlight .time-input:eq(1)').val(player.getDuration()).focus();
-  $('#highlights-container .highlight .time-input:eq(0)').val("0:00").focus();
+  $('#highlights-container .highlight #gamedataurl').focus();
   $('#highlights-container, #player-container').popover('show');
 }
 
@@ -89,29 +90,85 @@ function updateChronos() {
   chronos && chronos.destroy();
   chronos = new Chronos(player);
 
-  var highlights = document.getElementById('highlight-inputs-container').children;
-  for (var i = 0; i < highlights.length; i++) {
-    var inputs = [];
-    for (var j in highlights[i].children) {
-      if (highlights[i].children[j].tagName == "INPUT")
-        inputs.push(highlights[i].children[j]);
-    }
-    var startString = inputs[0].value;
-    var endString = inputs[1].value;
-
-    highlightBounds = [startString, endString].map(function(timeString) {
-      var timeFactors = timeString.split(":").reverse();
-      var timeInSeconds = 0;
-      for (var i = 0; i < timeFactors.length; i++) {
-        timeInSeconds += timeFactors[i] * Math.pow(60, i);
-      }
-      return timeInSeconds;
-    });
-
-    chronos.addHighlight(highlightBounds[0], highlightBounds[1]);
+  if (globalHighlights.length == 0) {
+    let highlights = getTimestamps($('#gamedataurl').val(), true);
+    globalHighlights = highlights.slice();
   }
 
+  let gameoffset = parseInt($('#gameoffset').val());
+  for (var i = 0; i < globalHighlights.length; i++) {
+    var highlight = globalHighlights[i];
+    chronos.addHighlight(gameoffset + highlight.start, gameoffset + highlight.end);
+  }
+  // var highlights = document.getElementById('highlight-inputs-container').children;
+  // for (var i = 0; i < highlights.length; i++) {
+  //   var inputs = [];
+  //   for (var j in highlights[i].children) {
+  //     if (highlights[i].children[j].tagName == "INPUT")
+  //       inputs.push(highlights[i].children[j]);
+  //   }
+  //   var startString = inputs[0].value;
+  //   var endString = inputs[1].value;
+
+  //   highlightBounds = [startString, endString].map(function(timeString) {
+  //     var timeFactors = timeString.split(":").reverse();
+  //     var timeInSeconds = 0;
+  //     for (var i = 0; i < timeFactors.length; i++) {
+  //       timeInSeconds += timeFactors[i] * Math.pow(60, i);
+  //     }
+  //     return timeInSeconds;
+  //   });
+
+  //   chronos.addHighlight(highlightBounds[0], highlightBounds[1]);
+  // }
+
   chronos.startWatcher();
+}
+
+function getTimestamps(theUrl, raw = false) {
+    var gameData;
+    if (!raw) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", theUrl, false );
+      xmlHttp.send( null );
+      gameData = JSON.parse(xmlHttp.responseText);
+    } else {
+      gameData = JSON.parse(theUrl);
+    }
+
+    var killTimeStamps = new Array();
+
+
+    for (var i=0;i<gameData.frames.length;i++){
+        for (var j=0;j<gameData.frames[i].events.length;j++) {
+            if (gameData.frames[i].events[j].type=="CHAMPION_KILL") {
+                var startEndPair = {};
+                startEndPair.start = Math.round((gameData.frames[i].events[j].timestamp - 10000)/1000);
+                startEndPair.end = Math.round((gameData.frames[i].events[j].timestamp+5000)/1000);
+                killTimeStamps.push(startEndPair);
+            }
+        }
+    }
+    return mergeTimestamps(killTimeStamps);
+}
+
+function mergeTimestamps(timestamps) {
+    for (var i=0;i<timestamps.length-1;) {
+        if (timestamps[i].end >= timestamps[i+1].end) {
+            timestamps.splice(i+1,1);
+        }
+
+        else if (timestamps[i].end >= timestamps[i+1].start) {
+            var newStart = timestamps[i].start;
+            timestamps.splice(i,1);
+            timestamps[i].start = newStart;
+        }
+
+        else {
+            i++;
+        }
+    }
+    return timestamps;
 }
 
 // Bindings
@@ -140,9 +197,7 @@ $(document).ready(function() {
     $(this).val(newVal);
   }
 
-  $('#add-highlight-button').click(function() {
-    $('#highlight-inputs-container').append("<div class=\"form-group highlight\"><input class=\"form-control time-input\" type=\"text\" placeholder=\"Start\"><span class=\"time-to-line\">—</span><input class=\"form-control time-input\" type=\"text\" placeholder=\"End\"></div>");
-    $('#highlights-container .highlight .time-input').focusout(formatTimestamp);
+  $('#process-highlights-button').click(function() {
   });
 
   $('#highlights-container .highlight .time-input').focusout(formatTimestamp);
